@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Porawit Poboonma</title>
+    <link>https://ball6847.github.io/</link>
+    <description>Recent content on Porawit Poboonma</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 16 May 2019 16:14:27 +0000</lastBuildDate>
+    
+	<atom:link href="https://ball6847.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TypeScript - Pick and Partial Built-in Type Combo</title>
+      <link>https://ball6847.github.io/posts/typescript-pick-partial/</link>
+      <pubDate>Thu, 16 May 2019 16:14:27 +0000</pubDate>
+      
+      <guid>https://ball6847.github.io/posts/typescript-pick-partial/</guid>
+      <description>บางคนที่เขียน TypeScript มาสักพักนึงคงเคยเจอ built-in type &amp;hellip; Pick และ Partial ผ่านตามาบ้าง &amp;hellip; แต่บางทีเราก็ไม่รู้ว่ามันจะเอาไปใช้ในสถานการณ์ไหนได้บ้าง &amp;hellip; วันนี้ผมมีท่านึงในการใช้คอมโบ Pick + Partial มาเสนอ ซึ่งเป็นท่าที่ช่วยให้ type ของเรายืดหยุ่นมากขึ้น แต่ก็ยังคงความถูกต้องเอาไว้เหมือนเดิม
+มาเริ่มกัน สมมุติผมมี interface แบบข้างล่างนี้
+interface Animal { legs: number; wings: number; canWalk: boolean; canFly: boolean; canSwim: boolean; canSpeak: boolean; } ผมอยากได้ฟังก์ชั่นที่สามารถเช็คได้ว่า object นี้เป็นนกหรือไม่ ผมสามารถเขียนฟังก์ชั่นแบบนี้
+/** * Check if the given object is bird * It must has 2 legs, 2 wings, can walk and can fly * * @return boolean **/ function isBird(obj: Animal) { return obj.</description>
+    </item>
+    
+  </channel>
+</rss>

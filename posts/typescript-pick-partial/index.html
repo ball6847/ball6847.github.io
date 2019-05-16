@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>TypeScript - Pick and Partial Built-in Type Combo // Porawit Poboonma</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.55.5" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Porawit Poboonma" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ball6847.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-2531198-22', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TypeScript - Pick and Partial Built-in Type Combo"/>
+<meta name="twitter:description" content="บางคนที่เขียน TypeScript มาสักพักนึงคงเคยเจอ built-in type &hellip; Pick และ Partial ผ่านตามาบ้าง &hellip; แต่บางทีเราก็ไม่รู้ว่ามันจะเอาไปใช้ในสถานการณ์ไหนได้บ้าง &hellip; วันนี้ผมมีท่านึงในการใช้คอมโบ Pick &#43; Partial มาเสนอ ซึ่งเป็นท่าที่ช่วยให้ type ของเรายืดหยุ่นมากขึ้น แต่ก็ยังคงความถูกต้องเอาไว้เหมือนเดิม
+มาเริ่มกัน สมมุติผมมี interface แบบข้างล่างนี้
+interface Animal { legs: number; wings: number; canWalk: boolean; canFly: boolean; canSwim: boolean; canSpeak: boolean; } ผมอยากได้ฟังก์ชั่นที่สามารถเช็คได้ว่า object นี้เป็นนกหรือไม่ ผมสามารถเขียนฟังก์ชั่นแบบนี้
+/** * Check if the given object is bird * It must has 2 legs, 2 wings, can walk and can fly * * @return boolean **/ function isBird(obj: Animal) { return obj."/>
+
+    <meta property="og:title" content="TypeScript - Pick and Partial Built-in Type Combo" />
+<meta property="og:description" content="บางคนที่เขียน TypeScript มาสักพักนึงคงเคยเจอ built-in type &hellip; Pick และ Partial ผ่านตามาบ้าง &hellip; แต่บางทีเราก็ไม่รู้ว่ามันจะเอาไปใช้ในสถานการณ์ไหนได้บ้าง &hellip; วันนี้ผมมีท่านึงในการใช้คอมโบ Pick &#43; Partial มาเสนอ ซึ่งเป็นท่าที่ช่วยให้ type ของเรายืดหยุ่นมากขึ้น แต่ก็ยังคงความถูกต้องเอาไว้เหมือนเดิม
+มาเริ่มกัน สมมุติผมมี interface แบบข้างล่างนี้
+interface Animal { legs: number; wings: number; canWalk: boolean; canFly: boolean; canSwim: boolean; canSpeak: boolean; } ผมอยากได้ฟังก์ชั่นที่สามารถเช็คได้ว่า object นี้เป็นนกหรือไม่ ผมสามารถเขียนฟังก์ชั่นแบบนี้
+/** * Check if the given object is bird * It must has 2 legs, 2 wings, can walk and can fly * * @return boolean **/ function isBird(obj: Animal) { return obj." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ball6847.github.io/posts/typescript-pick-partial/" />
+<meta property="article:published_time" content="2019-05-16T16:14:27&#43;00:00"/>
+<meta property="article:modified_time" content="2019-05-16T16:14:27&#43;00:00"/>
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ball6847.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="Porawit Poboonma" /></a>
+      <h1>Porawit Poboonma</h1>
+      <p>Frontend Software Engineer @ 7peaks Software</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/ball6847"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://www.facebook.com/ball6847"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-facebook">
+  <title>facebook</title>
+  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://linkedin.com/in/ball6847"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://youtube.com/ball6847"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-youtube">
+  <title>youtube</title>
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">TypeScript - Pick and Partial Built-in Type Combo</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          May 16, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<p>บางคนที่เขียน TypeScript มาสักพักนึงคงเคยเจอ built-in type &hellip; Pick และ Partial ผ่านตามาบ้าง &hellip; แต่บางทีเราก็ไม่รู้ว่ามันจะเอาไปใช้ในสถานการณ์ไหนได้บ้าง &hellip; วันนี้ผมมีท่านึงในการใช้คอมโบ Pick + Partial มาเสนอ ซึ่งเป็นท่าที่ช่วยให้ type ของเรายืดหยุ่นมากขึ้น แต่ก็ยังคงความถูกต้องเอาไว้เหมือนเดิม</p>
+
+<h1 id="มาเร-มก-น">มาเริ่มกัน</h1>
+
+<p>สมมุติผมมี interface แบบข้างล่างนี้</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Animal</span> {
+  <span style="color:#a6e22e">legs</span>: <span style="color:#66d9ef">number</span>;
+  <span style="color:#a6e22e">wings</span>: <span style="color:#66d9ef">number</span>;
+  <span style="color:#a6e22e">canWalk</span>: <span style="color:#66d9ef">boolean</span>;
+  <span style="color:#a6e22e">canFly</span>: <span style="color:#66d9ef">boolean</span>;
+  <span style="color:#a6e22e">canSwim</span>: <span style="color:#66d9ef">boolean</span>;
+  <span style="color:#a6e22e">canSpeak</span>: <span style="color:#66d9ef">boolean</span>;
+}</code></pre></div>
+<p>ผมอยากได้ฟังก์ชั่นที่สามารถเช็คได้ว่า object นี้เป็นนกหรือไม่ ผมสามารถเขียนฟังก์ชั่นแบบนี้</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Check if the given object is bird
+</span><span style="color:#75715e"> * It must has 2 legs, 2 wings, can walk and can fly
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * @return boolean
+</span><span style="color:#75715e"> **/</span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isBird</span>(<span style="color:#a6e22e">obj</span>: <span style="color:#66d9ef">Animal</span>) {
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">legs</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">2</span> <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">wings</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">canWalk</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">canFly</span>;
+}</code></pre></div>
+<p>ตอนเอาไปใช้ ผมหวังว่าเราจะสามารถเขียนได้แบบนี้</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">myBird</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">legs</span>: <span style="color:#66d9ef">2</span>,
+  <span style="color:#a6e22e">wings</span>: <span style="color:#66d9ef">2</span>,
+  <span style="color:#a6e22e">canWalk</span>: <span style="color:#66d9ef">true</span>,
+  <span style="color:#a6e22e">canFly</span>: <span style="color:#66d9ef">true</span>
+}
+
+<span style="color:#a6e22e">isBird</span>(<span style="color:#a6e22e">myBird</span>);</code></pre></div>
+<p>แต่มันทำไม่ได้ &hellip; compiler ก็จะด่าเรากลับมา เพราะฟังก์ชั่นถูกเขียนไว้ว่าต้องเอา <code>Animal</code> ส่งเข้าไปเช็ค &hellip; แต่สิ่งที่ผมส่งเข้าไปมันไม่ครบตาม interface ของ <code>Animal</code> งัย</p>
+
+<p>ถ้าผมอยากให้มันเช็คได้ ผมต้อง define ทุกอย่างให้ครบแบบนี้</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">myBird</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">legs</span>: <span style="color:#66d9ef">2</span>,
+  <span style="color:#a6e22e">wings</span>: <span style="color:#66d9ef">2</span>,
+  <span style="color:#a6e22e">canWalk</span>: <span style="color:#66d9ef">true</span>,
+  <span style="color:#a6e22e">canFly</span>: <span style="color:#66d9ef">true</span>,
+  <span style="color:#a6e22e">canSwim</span>: <span style="color:#66d9ef">false</span>,
+  <span style="color:#a6e22e">canSpeak</span>: <span style="color:#66d9ef">false</span>
+}
+
+<span style="color:#a6e22e">isBird</span>(<span style="color:#a6e22e">myBird</span>);</code></pre></div>
+<p>แต่ ใครจะไปสน &hellip; ผมไม่สนเว้ยยย ผมมีคุณสมบัตินกแบบของผม ผมขอแค่มันมี 2 ขา 2 ปีก เดินได้ บินได้ ผมก็ถือว่ามันเป็นนกแล้ว &hellip; บางตัวมันอาจจะพูดได้ ว่ายน้ำได้ ก็เรื่องของมัน &hellip; แต่ถ้ามันตรงตามที่ผมบอกผมก็ถือว่ามันเป็นนก!!</p>
+
+<p>ทีนี้ผมจะทำยังงัยที่จะทำให้ฟังก์ชั่น <code>isBird</code> สามารถรับ object ที่มีรูปร่างแบบ <code>Animal</code> แต่ไม่จำเป็นต้องระบุคุณสมบัติครบทั้งหมด ขอแค่มีส่งที่ผมต้องใช้เช็คให้ครบก็พอ</p>
+
+<p>ในเคสแบบนี้ ผมสามารถใช้ <code>Partial</code> ร่วมกันกับ <code>Pick</code> เพื่อสร้าง type ใหม่ขึ้นมาจาก <code>Animal</code> ได้ &hellip; โดยผมจะใช้วิธีคิดแบบนี้</p>
+
+<ol>
+<li>ผมเลือกหยิบเอามาเฉพาะฟิลด์ที่ผมต้องการด้วยการใช้ Pick</li>
+<li>ผมจะทำให้ฟิลด์อื่นๆนอกจากนั้นเป็น optional ด้วยการใช้ Partial</li>
+</ol>
+
+<p>ถ้าทำแบบนี้ได้ ก็จะตรงกับ สิ่งที่เราต้องการ</p>
+
+<h1 id="สำหร-บข-อ-1-ผมสามารถเข-ยนได-แบบน">สำหรับข้อ 1 ผมสามารถเขียนได้แบบนี้</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#a6e22e">type</span> <span style="color:#a6e22e">BirdSpec</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Pick</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Animal</span>, <span style="color:#e6db74">&#39;legs&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;wings&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;canWalk&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;canFly&#39;</span><span style="color:#f92672">&gt;</span>;
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isBird</span>(<span style="color:#a6e22e">obj</span>: <span style="color:#66d9ef">BirdSpec</span>) {
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">legs</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">2</span> <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">wings</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">canWalk</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">canFly</span>;
+}</code></pre></div>
+<p>แบบนี้ object ที่ผมส่งเข้าไป ต้องมี ของ 4 อย่างตามที่ผมระบุ และ type ของแต่ละฟิลด์ข้างในต้องตรงกับที่ประกาศใน <code>Animal</code></p>
+
+<p>หรือพูดอีกอย่างหนึ่งว่า หน้าตาของ <code>BirdSpec</code> จะมีค่าเทียบเท่า</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">BirdSpec</span> {
+  <span style="color:#a6e22e">legs</span>: <span style="color:#66d9ef">number</span>;
+  <span style="color:#a6e22e">wings</span>: <span style="color:#66d9ef">number</span>;
+  <span style="color:#a6e22e">canWalk</span>: <span style="color:#66d9ef">boolean</span>;
+  <span style="color:#a6e22e">canFly</span>: <span style="color:#66d9ef">boolean</span>;
+}</code></pre></div>
+<p>ข้อดีของการใช้ <code>Pick</code> แทนการประกาศ <code>BirdSpec</code> เป็น interface แยกไปอีกตัว คือ เราไม่ต้อง maintain ของแยกกัน ทั้ง <code>Animal</code> และ <code>BirdSpec</code> วันนึงเกิดผมต้องการเปลี่ยน type ของสักฟิลด์ใน <code>Animal</code> เป็นอย่างอื่น เช่น ผมอาจจะเปลี่ยน legs เป็น string (สมมุตินะ) ผมก็แก้ที่ <code>Animal</code> อย่างเดียว ไม่ต้องไปตามแก้ <code>BirdSpec</code> ด้วย</p>
+
+<p>แต่ข้อเสียก็คือ หากมีฟิลด์อื่นๆปนเข้ามา compiler มันก็จะด่าเราอยู่ดี เพราะมันรู้จักแค่ 4 ฟิลด์นี้ &hellip; ซึ่งสมมุติหากเราเอาสัตว์ชนิดอื่นที่ไม่ใช่นกมาเช็คมันก็อาจมี อย่างอื่นปนมาบ้างใช่ป่ะ เพราะฉะนั้นทำแค่นี้เลยยังไม่พอ</p>
+
+<p>ทีนี้ก็ต้องใช้ Partial ช่วย</p>
+
+<h1 id="partial-จะช-วยให-ท-กฟ-ลด-ใน-interface-กลายเป-น-optional">Partial จะช่วยให้ ทุกฟิลด์ใน interface กลายเป็น optional</h1>
+
+<p>สามารถเขียนได้แบบนี้</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#a6e22e">type</span> <span style="color:#a6e22e">MaybeAnimal</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Partial</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Animal</span><span style="color:#f92672">&gt;</span>;</code></pre></div>
+<p>ซึ่งมันก็จะมีค่าเทียบเท่ากับการประกาศ interface ใหม่แบบนี้</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typeScript" data-lang="typeScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">MaybeAnimal</span> {
+  <span style="color:#a6e22e">legs?</span>: <span style="color:#66d9ef">number</span>;
+  <span style="color:#a6e22e">wings?</span>: <span style="color:#66d9ef">number</span>;
+  <span style="color:#a6e22e">canWalk?</span>: <span style="color:#66d9ef">boolean</span>;
+  <span style="color:#a6e22e">canFly?</span>: <span style="color:#66d9ef">boolean</span>;
+  <span style="color:#a6e22e">canSwim?</span>: <span style="color:#66d9ef">boolean</span>;
+  <span style="color:#a6e22e">canSpeak?</span>: <span style="color:#66d9ef">boolean</span>;
+}</code></pre></div>
+<p>หมายความว่า หากมีแค่บางฟิลด์ในนี้ compiler จะปล่อยให้ผ่าน &hellip; แต่ถ้ามีฟิลด์แปลกปลอมปนเข้ามามันก็ด่าทันที หากฟิลด์นั้นมันไม่รู้จักใน type นี้</p>
+
+<p>ทีนี้หาก นำมาใช้ร่วมกัน ผมจะเขียน BirdSpec ใหม่ได้แบบนี้</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#a6e22e">type</span> <span style="color:#a6e22e">BirdSpec</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Pick</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Animal</span>, <span style="color:#e6db74">&#39;legs&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;wings&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;canWalk&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;canFly&#39;</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> <span style="color:#a6e22e">Partial</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Animal</span><span style="color:#f92672">&gt;</span>;</code></pre></div>
+<p><code>BirdSpec</code> ตอนนี้ก็จะมีค่าเทียบเท่ากับ interface ข้างล่างนี้ทันที</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typeScript" data-lang="typeScript"><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">BirdSpec</span> {
+  <span style="color:#a6e22e">legs</span>: <span style="color:#66d9ef">number</span>;
+  <span style="color:#a6e22e">wings</span>: <span style="color:#66d9ef">number</span>;
+  <span style="color:#a6e22e">canWalk</span>: <span style="color:#66d9ef">boolean</span>;
+  <span style="color:#a6e22e">canFly</span>: <span style="color:#66d9ef">boolean</span>;
+  <span style="color:#a6e22e">canSwim?</span>: <span style="color:#66d9ef">boolean</span>;
+  <span style="color:#a6e22e">canSpeak?</span>: <span style="color:#66d9ef">boolean</span>;
+}</code></pre></div>
+<p>หมายความว่า object นั้น ต้องมี <code>legs</code>, <code>wings</code>, <code>canWalk</code>, <code>canFly</code> ตาม type ที่ประกาศใน <code>Animal</code> &hellip; และสามารถมีฟิลด์อื่นใน <code>Animal</code> ปนเข้ามาได้ด้วย แต่หากใส่ฟิลด์อื่นๆที่นอกเหนือจากที่ <code>Animal</code> รู้จัก compiler ก็จะด่าเราทันที</p>
+
+<p>จะเห็นว่า built-in type พวกนี้มัน powerful มาก ถ้าเรารู้จักประยุกต์ใช้</p>
+
+<p>จอบอ &hellip; ใครมีวิธีง่ายกว่านี้บอกผมด้วย</p>
+
+    </div>
+    <div class="post-footer">
+      <div class="addthis_inline_share_toolbox"></div>
+
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "ball6847-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5cdd9bd5bae05a34" async></script>
+
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
