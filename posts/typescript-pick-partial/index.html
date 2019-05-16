@@ -93,7 +93,7 @@ interface Animal { legs: number; wings: number; canWalk: boolean; canFly: boolea
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          2 min read
+          3 min read
         </div></div>
     </header>
     <div class="post-content">
@@ -205,6 +205,16 @@ interface Animal { legs: number; wings: number; canWalk: boolean; canFly: boolea
   <span style="color:#a6e22e">canSpeak?</span>: <span style="color:#66d9ef">boolean</span>;
 }</code></pre></div>
 <p>หมายความว่า object นั้น ต้องมี <code>legs</code>, <code>wings</code>, <code>canWalk</code>, <code>canFly</code> ตาม type ที่ประกาศใน <code>Animal</code> &hellip; และสามารถมีฟิลด์อื่นใน <code>Animal</code> ปนเข้ามาได้ด้วย แต่หากใส่ฟิลด์อื่นๆที่นอกเหนือจากที่ <code>Animal</code> รู้จัก compiler ก็จะด่าเราทันที</p>
+
+<h1 id="อ-านยากจ-ง-ม-ส-นๆกว-าน-ม-ย">อ่านยากจัง มีสั้นๆกว่านี้มั้ย</h1>
+
+<p>ยังไม่สะใจ? ไม่เป็นไร เราสามารถสร้าง Generic Type ขึ้นมาใหม่ โดยใช้สิ่งที่เราเรียนรู้มาจากข้างบน</p>
+
+<p>สามารถเขียนได้แบบนี้</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#66d9ef">export</span> <span style="color:#a6e22e">type</span> <span style="color:#a6e22e">RequiredSome</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span>, <span style="color:#a6e22e">K</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">keyof</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Pick</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span>, <span style="color:#a6e22e">K</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> <span style="color:#a6e22e">Partial</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>;</code></pre></div>
+<p>ทีนี้ BirdSpec เราจะเหลือสั้นๆแค่นี้</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#a6e22e">type</span> <span style="color:#a6e22e">BirdSpec</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">RequiredSome</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Animal</span>, <span style="color:#e6db74">&#39;legs&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;wings&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;canWalk&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;canFly&#39;</span><span style="color:#f92672">&gt;</span>;</code></pre></div>
+<p>ใครมีชื่อดีกว่า <code>RequiredSome</code> มะ -0-</p>
 
 <p>จะเห็นว่า built-in type พวกนี้มัน powerful มาก ถ้าเรารู้จักประยุกต์ใช้</p>
 
