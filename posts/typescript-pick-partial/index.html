@@ -23,7 +23,9 @@ if (!doNotTrack) {
 }
 </script>
 
-    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://ball6847.github.io/avatar.jpg"/>
+
 <meta name="twitter:title" content="TypeScript - Pick and Partial Built-in Type Combo"/>
 <meta name="twitter:description" content="บางคนที่เขียน TypeScript มาสักพักนึงคงเคยเจอ built-in type &hellip; Pick และ Partial ผ่านตามาบ้าง &hellip; แต่บางทีเราก็ไม่รู้ว่ามันจะเอาไปใช้ในสถานการณ์ไหนได้บ้าง &hellip; วันนี้ผมมีท่านึงในการใช้คอมโบ Pick &#43; Partial มาเสนอ ซึ่งเป็นท่าที่ช่วยให้ type ของเรายืดหยุ่นมากขึ้น แต่ก็ยังคงความถูกต้องเอาไว้เหมือนเดิม
 มาเริ่มกัน สมมุติผมมี interface แบบข้างล่างนี้
@@ -37,6 +39,8 @@ interface Animal { legs: number; wings: number; canWalk: boolean; canFly: boolea
 /** * Check if the given object is bird * It must has 2 legs, 2 wings, can walk and can fly * * @return boolean **/ function isBird(obj: Animal) { return obj." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ball6847.github.io/posts/typescript-pick-partial/" />
+
+<meta property="og:image" content="https://ball6847.github.io/avatar.jpg" />
 <meta property="article:published_time" content="2019-05-16T16:14:27&#43;00:00"/>
 <meta property="article:modified_time" content="2019-05-16T16:14:27&#43;00:00"/>
 
@@ -208,8 +212,6 @@ interface Animal { legs: number; wings: number; canWalk: boolean; canFly: boolea
 
     </div>
     <div class="post-footer">
-      <div class="addthis_inline_share_toolbox"></div>
-
       <div id="disqus_thread"></div>
 <script type="application/javascript">
     var disqus_config = function () {
@@ -230,8 +232,6 @@ interface Animal { legs: number; wings: number; canWalk: boolean; canFly: boolea
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-      <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5cdd9bd5bae05a34" async></script>
-
     </div>
   </article>
 
